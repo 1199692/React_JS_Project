@@ -9,12 +9,12 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {  withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 
 
-const useStyles = makeStyles((theme) => ({
+const styles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-}));
+});
 
 
-export default class FormData extends Component {
+class FormData extends Component {
    
     userData;
 
@@ -101,22 +101,24 @@ export default class FormData extends Component {
         }
     }
 
+    //Update Local storage
     componentWillUpdate(nextProps, nextState){
         localStorage.setItem('user', JSON.stringify(nextState));
     }
+
     render(){
-             
+        const { classes } = this.props
         return (
             <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <div className={useStyles.paper}>
-                <Avatar className={useStyles.avatar}>
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
                 Sign up
-                </Typography>
-                <form className={useStyles.form} onSubmit={this.onSubmit}>
+                </Typography><br></br>
+                <form className={classes.form} onSubmit={this.onSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                     <TextField
@@ -186,7 +188,7 @@ export default class FormData extends Component {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    className={useStyles.submit}
+                    className={classes.submit}
                 >
                     Submit
                 </Button>
@@ -203,4 +205,4 @@ export default class FormData extends Component {
         );
      }
 }
-
+export default withStyles(styles, {withTheme:true}) (FormData)
